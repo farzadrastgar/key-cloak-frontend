@@ -23,21 +23,21 @@ export default function LoginCard() {
       </p>
 
       {/* Divider */}
-      <div className="flex items-center my-6">
+      {/* <div className="flex items-center my-6">
         <div className="flex-1 h-px bg-gray-300" />
         <span className="mx-3 text-gray-400 text-sm">OR</span>
         <div className="flex-1 h-px bg-gray-300" />
-      </div>
+      </div> */}
 
       {/* Google Button */}
-      <button className="w-full border rounded-lg py-3 flex items-center justify-center gap-2 hover:bg-gray-50 transition">
+      {/* <button className="w-full border rounded-lg py-3 flex items-center justify-center gap-2 hover:bg-gray-50 transition">
         <img
           src="https://www.svgrepo.com/show/475656/google-color.svg"
           alt="google"
           className="w-5 h-5"
         />
         <span className="text-gray-700">Google</span>
-      </button>
+      </button> */}
     </div>
   );
 }
