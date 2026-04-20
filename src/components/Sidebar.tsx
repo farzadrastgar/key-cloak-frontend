@@ -1,15 +1,21 @@
-import type { JSX } from "react";
+import SidebarMenu, { SidebarItem } from "./SidebarMenu"
+import { Calendar, Flag, Home, Layers, LayoutDashboard, LifeBuoy, Settings, StickyNote } from "lucide-react"
 
-const Sidebar = () :JSX.Element=> {
-  return (
-    <div className="w-16 bg-white border-r flex flex-col items-center py-4 space-y-6">
-      {[...Array(4)].map((_, i) => (
-        <div key={i} className="w-6 h-6 bg-gray-300 rounded" />
-      ))}
-      <div className="mt-auto w-6 h-6 bg-gray-300 rounded" />
-    </div>
-  );
+
+const Sidebar = () => {
+    return (   <div className="flex">
+        <SidebarMenu>
+          <SidebarItem icon={<Home size={20} />} text="Home" alert />
+          <SidebarItem icon={<LayoutDashboard size={20} />} text="Dashboard" active />
+          <SidebarItem icon={<StickyNote size={20} />} text="Projects" alert />
+          <SidebarItem icon={<Calendar size={20} />} text="Calendar" />
+          <SidebarItem icon={<Layers size={20} />} text="Tasks" />
+          <SidebarItem icon={<Flag size={20} />} text="Reporting" />
+          <hr className="my-3" />
+          <SidebarItem icon={<Settings size={20} />} text="Settings" />
+          <SidebarItem icon={<LifeBuoy size={20} />} text="Help" />
+        </SidebarMenu>
+      </div> );
 }
-
  
 export default Sidebar;
