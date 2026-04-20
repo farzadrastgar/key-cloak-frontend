@@ -11,10 +11,6 @@ export type LoginPayload = {
 export type AuthResponse = {
   accessToken: string;
   refreshToken: string;
-  user: {
-    id: string;
-    email: string;
-  };
 };
 
 export type RefreshResponse = {

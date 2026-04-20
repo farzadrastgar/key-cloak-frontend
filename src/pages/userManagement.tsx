@@ -1,5 +1,3 @@
-import Sidebar from "../components/SidebarMenu";
-import Topbar from "../components/Topbar";
 import UserList from "../components/UserList";
 import UserForm from "../components/UserForm";
 
