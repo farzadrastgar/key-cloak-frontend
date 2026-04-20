@@ -1,17 +1,18 @@
-// Layout.jsx
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 
 export default function Layout() {
   return (
-    <div style={{ display: "flex" }}>
-      <Sidebar />
+    <div className="flex flex-col min-h-screen">
+      {/* Topbar full width */}
+      <Topbar />
 
-      <div style={{ flex: 1 }}>
-        <Topbar />
+      {/* Body: Sidebar + Content */}
+      <div className="flex flex-1">
+        <Sidebar />
 
-        <main>
+        <main className="flex-1 p-4 bg-gray-50">
           <Outlet />
         </main>
       </div>
