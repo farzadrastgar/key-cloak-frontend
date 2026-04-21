@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Menu, LayoutDashboard, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../auth/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 const Topbar = () => {
   const [showDropDown, setShowDropDown] = useState(false);
@@ -17,7 +17,7 @@ const Topbar = () => {
   };
 
   return (
-    <header className="bg-white shadow-md px-6 py-4 flex justify-between items-center relative">
+    <header className="bg-white shadow-md px-6 py-4 flex justify-between items-center border-b relative">
       {/* Title */}
       <h1 className="text-xl font-bold text-gray-800">Belzir</h1>
 
@@ -37,8 +37,8 @@ const Topbar = () => {
 
               {/* Dashboard */}
               <li>
-                <button   onClick={goToDashboard}
-                   className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                <button onClick={goToDashboard}
+                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
                   <LayoutDashboard size={18} />
                   Dashboard
                 </button>
@@ -46,8 +46,8 @@ const Topbar = () => {
 
               {/* Sign out */}
               <li>
-                <button  onClick={handleLogout}
-                className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                <button onClick={handleLogout}
+                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
                   <LogOut size={18} />
                   Sign out
                 </button>

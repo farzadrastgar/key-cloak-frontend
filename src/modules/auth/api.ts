@@ -1,26 +1,6 @@
-import api from "./api";
+import api from "../../services/apiClient";
+import type { AuthResponse, LoginPayload, RefreshResponse } from "./types";
 
-// =========================
-// TYPES (optional but recommended)
-// =========================
-export type LoginPayload = {
-  email: string;
-  password: string;
-};
-
-export type AuthResponse = {
-  accessToken: string;
-  refreshToken: string;
-};
-
-export type RefreshResponse = {
-  accessToken: string;
-  refreshToken: string;
-};
-
-// =========================
-// AUTH API CALLS
-// =========================
 
 export const loginRequest = async (payload: LoginPayload) => {
   const { data } = await api.post<AuthResponse>("/auth/login", payload);
