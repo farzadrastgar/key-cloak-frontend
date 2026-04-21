@@ -1,18 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SubSidebar from "../components/SubSideBar";
 import ToggleCard from "../components/ToggleCard";
+import {
+    getMfaSettingsRequest,
+    updateMfaSettingsRequest,
+} from "../api";
+import type { MFASettings } from "../types";
 
 const MFASettingsPage = () => {
+    const [settings, setSettings] = useState<MFASettings | null>(null);
+    const [loading, setLoading] = useState(true);
 
-    const [settings, setSettings] = useState({
-        totp: false,
-        email: false,
-        phone: false,
-    });
+    useEffect(() => {
+        const load = async () => {
+            try {
+                const data = await getMfaSettingsRequest();
+                setSettings(data);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const toggle = (key: keyof typeof settings) => {
-        setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
+        load();
+    }, []);
+
+    const toggle = async (key: keyof MFASettings) => {
+        if (!settings) return;
+
+        const updated = {
+            ...settings,
+            [key]: !settings[key],
+        };
+
+        setSettings(updated);
+
+        try {
+            await updateMfaSettingsRequest(updated);
+        } catch (err) {
+            console.log(err)
+            setSettings(settings);
+        }
     };
+
+    if (loading || !settings) {
+        return <div className="p-6">Loading settings...</div>;
+    }
 
     return (
         <>
@@ -21,10 +53,8 @@ const MFASettingsPage = () => {
             </h1>
 
             <div className="flex gap-8">
-                {/* LEFT PANEL */}
                 <SubSidebar />
 
-                {/* RIGHT CONTENT */}
                 <div className="flex-1">
                     <h2 className="text-lg font-semibold mb-4">
                         Multifaktor Authentifizierung
@@ -32,24 +62,24 @@ const MFASettingsPage = () => {
 
                     <div className="space-y-4">
                         <ToggleCard
-                            title="Einmalpasswörter (TOTP-App)"
-                            description="Nutzer können eine TOTP-App per QR-Code registrieren und den Code als zweiten Faktor nutzen."
+                            title="TOTP App"
+                            description="Use authenticator app"
                             enabled={settings.totp}
                             onToggle={() => toggle("totp")}
                         />
 
                         <ToggleCard
-                            title="E-Mail Passcodes"
-                            description="Falls keine TOTP-App registriert ist, erhält der Nutzer einen Passcode per E-Mail."
+                            title="E-Mail Code"
+                            description="Email OTP fallback"
                             enabled={settings.email}
                             onToggle={() => toggle("email")}
                         />
 
                         <ToggleCard
-                            title="Mobilfunknummer"
-                            description="Falls keine TOTP-App registriert ist, erhält der Nutzer einen Passcode per SMS."
-                            enabled={settings.phone}
-                            onToggle={() => toggle("phone")}
+                            title="SMS Code"
+                            description="SMS OTP fallback"
+                            enabled={settings.sms}
+                            onToggle={() => toggle("sms")}
                         />
                     </div>
                 </div>
