@@ -1,7 +1,7 @@
 import UserList from "../components/UserList";
 import UserForm from "../components/UserForm";
 
-const UserManagementPage: React.FC = () => {
+const UsersListPage: React.FC = () => {
   return (
     <div className="flex h-screen bg-gray-100">
 
@@ -16,4 +16,4 @@ const UserManagementPage: React.FC = () => {
   );
 };
 
-export default UserManagementPage;
+export default UsersListPage;

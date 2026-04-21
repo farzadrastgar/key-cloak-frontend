@@ -1,4 +1,4 @@
-import InputField from "./InputField";
+import InputField from "../../../components/ui/InputField";
 
 export default function UserForm() {
   return (
