@@ -24,9 +24,9 @@ export default function AppRoutes() {
       {/* Everything below is protected */}
       <Route element={<ProtectedRoute />}>
         <Route element={<Layout />}>
-          
+
           <Route path="/" element={<Navigate to="/dashboard" />} />
-          
+
           <Route path="/dashboard" element={<DashboardPage />} />
 
           <Route path="/users" element={<UsersListPage />} />
@@ -40,8 +40,8 @@ export default function AppRoutes() {
           <Route path="/organizations" element={<OrganizationsListPage />} />
           <Route path="/organizations/new" element={<CreateOrganizationPage />} />
           <Route path="/organizations/:id" element={<OrganizationDetailsPage />} />
-
-          <Route path="/settings/authentication" element={<AuthenticationsSettingsPage />} />
+          <Route path="/settings" element={<Navigate to="/settings/auth" replace />} />
+          <Route path="/settings/auth" element={<AuthenticationsSettingsPage />} />
           <Route path="/settings/mfa" element={<MFASettingsPage />} />
 
         </Route>
