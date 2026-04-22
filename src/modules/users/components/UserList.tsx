@@ -1,5 +1,5 @@
 import InputField from "../../../components/ui/InputField";
-import type { User } from "../types/types";
+import type { User } from "../types/user.types";
 import UserListItem from "./UserListItem";
 import { useState, type ChangeEvent } from "react";
 

@@ -1,3 +1,6 @@
+import type { BaseModalProps } from "../../../components/ui/types/modal.types";
+import type { User } from "./user.types";
+
 export type UserMenuAction = "edit" | "delete" | "password" | "authorize";
 
 export interface UserMenuProps {
@@ -7,4 +10,8 @@ export interface UserMenuProps {
 export interface MenuItemProps {
     label: string;
     onClick?: () => void;
+}
+
+export interface DeleteUserModalProps extends BaseModalProps {
+    user: User;
 }

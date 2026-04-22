@@ -1,5 +1,5 @@
 import api from "../../../services/apiClient";
-import type { CreateUserPayload, ResetPasswordPayload, ToggleUserStatusPayload, UpdateUserPayload, User } from "../types/types";
+import type { CreateUserPayload, ResetPasswordPayload, ToggleUserStatusPayload, UpdateUserPayload, User } from "../types/user.types";
 
 
 // GET USERS

@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent } from "react";
 import InputField from "../../../components/ui/InputField";
 import { createUserRequest } from "../api/users.api";
-import type { CreateUserPayload } from "../types/types";
+import type { CreateUserPayload } from "../types/user.types";
 
 export default function NewUserForm() {
   const [form, setForm] = useState<CreateUserPayload>({

@@ -10,7 +10,7 @@ import type {
     CreateUserPayload,
     UpdateUserPayload,
     ResetPasswordPayload,
-} from "../types/types";
+} from "../types/user.types";
 import { toast } from "sonner";
 
 export const useUsers = (search?: string) => {

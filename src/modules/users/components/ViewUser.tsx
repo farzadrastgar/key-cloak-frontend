@@ -2,7 +2,7 @@ import { useState } from "react";
 import DeleteUserModal from "./modals/DeleteUserModal";
 import EditUserModal from "./modals/EditUserModal";
 import ResetPasswordModal from "./modals/ResetPasswordModal";
-import type { User } from "../types/types";
+import type { User } from "../types/user.types";
 import UserMenu from "./UserMenu";
 
 export default function ViewUser({ user }: { user: User }) {
@@ -48,10 +48,10 @@ export default function ViewUser({ user }: { user: User }) {
         <EditUserModal onClose={() => setOpenModal(null)} />
       )}
       {openModal === "delete" && (
-        <DeleteUserModal onClose={() => setOpenModal(null)} />
+        <DeleteUserModal onClose={() => setOpenModal(null)} user={user} />
       )}
       {openModal === "password" && (
-        <ResetPasswordModal onClose={() => setOpenModal(null)} />
+        <ResetPasswordModal onClose={() => setOpenModal(null)} user={user} />
       )}
     </div>
   );

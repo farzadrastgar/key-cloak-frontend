@@ -3,7 +3,7 @@ import UserList from "../components/UserList";
 import NewUserForm from "../components/NewUserForm";
 import ViewUser from "../components/ViewUser";
 import { getUsersRequest } from "../api/users.api";
-import type { User } from "../types/types";
+import type { User } from "../types/user.types";
 
 const UsersPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -14,7 +14,6 @@ const UsersPage: React.FC = () => {
   useEffect(() => {
     const fetchUsers = async (search?: string) => {
       const data = await getUsersRequest(search);
-      console.log(data)
       setUsers(data.data);
     };
     fetchUsers(search);
