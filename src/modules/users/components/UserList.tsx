@@ -1,27 +1,41 @@
+import InputField from "../../../components/ui/InputField";
+import type { User } from "../types/types";
 import UserListItem from "./UserListItem";
+import { useState, type ChangeEvent } from "react";
 
-const UserList = () => {
-    const users = [
-    { name: "NewTest User", email: "abc@test.de" },
-    { name: "John Doe", email: "user1045349719845361309@example.com" },
-    { name: "John Doe", email: "user1065247109813233401@example.com" },
-    { name: "John Doe", email: "user106974850521749571@example.com" },
-  ];
+const List = ({
+  users,
+  onSelectUser,
+  onSearch,
+}: {
+  users: User[];
+  onSelectUser: (user: User) => void;
+  onSearch: (value: string) => void;
+}) => {
+  const [search, setSearch] = useState("");
+
+  const handleSearch = (value: string) => {
+    setSearch(value);
+    onSearch(value);
+  };
 
   return (
     <div className="w-1/3 bg-white border-r p-4">
-      <input
-        placeholder="Search..."
-        className="w-full mb-4 p-2 border rounded"
+      <InputField
+        label="Benutzer suchen"
+        value={search}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => handleSearch(e.target.value)}
       />
 
-      <div className="space-y-3">
-        {users.map((user, i) => (
-          <UserListItem key={i} user={user} />
+      <div className="space-y-3 mt-4">
+        {users.map((user) => (
+          <div key={user.id} onClick={() => onSelectUser(user)}>
+            <UserListItem user={user} />
+          </div>
         ))}
       </div>
     </div>
-  ); 
-}
- 
-export default UserList;
+  );
+};
+
+export default List;

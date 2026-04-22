@@ -2,9 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import Layout from "../layouts/MainLayout";
 import DashboardPage from "../modules/dashboard/pages/Dashboard";
-import CreateUserPage from "../modules/users/pages/CreateUser";
-import UserDetailsPage from "../modules/users/pages/UserDetails";
-import EditUserPage from "../modules/users/pages/EditUser";
+
 import InvitationsListPage from "../modules/invitations/pages/InvitationsList";
 import InviteUserPage from "../modules/invitations/pages/InviteUser";
 import OrganizationsListPage from "../modules/organizations/pages/OrganizationsList";
@@ -13,7 +11,7 @@ import OrganizationDetailsPage from "../modules/organizations/pages/Organization
 import AuthenticationsSettingsPage from "../modules/settings/pages/AuthenticationSettings";
 import MFASettingsPage from "../modules/settings/pages/MFASettings";
 import LoginPage from "../modules/auth/pages/Login";
-import UsersListPage from "../modules/users/pages/UsersList";
+import UsersPage from "../modules/users/pages/Users";
 
 export default function AppRoutes() {
   return (
@@ -29,10 +27,8 @@ export default function AppRoutes() {
 
           <Route path="/dashboard" element={<DashboardPage />} />
 
-          <Route path="/users" element={<UsersListPage />} />
-          <Route path="/users/new" element={<CreateUserPage />} />
-          <Route path="/users/:id" element={<UserDetailsPage />} />
-          <Route path="/users/:id/edit" element={<EditUserPage />} />
+          <Route path="/users" element={<UsersPage />} />
+
 
           <Route path="/invitations" element={<InvitationsListPage />} />
           <Route path="/invitations/new" element={<InviteUserPage />} />

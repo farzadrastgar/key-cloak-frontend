@@ -1,14 +1,10 @@
-import api from "../../services/apiClient";
-import type { CreateUserPayload, ResetPasswordPayload, ToggleUserStatusPayload, UpdateUserPayload, User } from "./types";
+import api from "../../../services/apiClient";
+import type { CreateUserPayload, ResetPasswordPayload, ToggleUserStatusPayload, UpdateUserPayload, User } from "../types/types";
 
-
-// =========================
-// USERS API CALLS
-// =========================
 
 // GET USERS
 export const getUsersRequest = async (search?: string) => {
-    const { data } = await api.get<User[]>("/users", {
+    const { data } = await api.get<{ data: User[] }>("/users", {
         params: search ? { search } : undefined,
     });
     return data;
