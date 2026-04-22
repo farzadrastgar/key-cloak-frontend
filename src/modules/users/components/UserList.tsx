@@ -5,10 +5,12 @@ import { useState, type ChangeEvent } from "react";
 
 const List = ({
   users,
+  selectedUser,
   onSelectUser,
   onSearch,
 }: {
   users: User[];
+  selectedUser: User | null;
   onSelectUser: (user: User) => void;
   onSearch: (value: string) => void;
 }) => {
@@ -30,7 +32,8 @@ const List = ({
       <div className="space-y-3 mt-4">
         {users.map((user) => (
           <div key={user.id} onClick={() => onSelectUser(user)}>
-            <UserListItem user={user} />
+            <UserListItem user={user} isSelected={selectedUser?.id === user.id}
+            />
           </div>
         ))}
       </div>

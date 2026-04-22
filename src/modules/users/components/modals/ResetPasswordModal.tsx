@@ -1,5 +1,4 @@
 import { useState, type ChangeEvent } from "react";
-import { AxiosError } from "axios";
 import { Modal } from "../../../../components/ui/Modal";
 import type { BaseModalProps } from "../../../../components/ui/types/modal.types";
 import type { User } from "../../types/user.types";

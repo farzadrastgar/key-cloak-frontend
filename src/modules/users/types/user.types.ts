@@ -34,3 +34,9 @@ export type ResetPasswordPayload = {
 export type ToggleUserStatusPayload = {
     active: boolean;
 };
+
+export type ApiError = {
+    message?: string | string[];
+    error?: string;
+    statusCode?: number;
+};

@@ -1,7 +1,8 @@
 import { useState, type ChangeEvent } from "react";
 import InputField from "../../../components/ui/InputField";
-import { createUserRequest } from "../api/users.api";
 import type { CreateUserPayload } from "../types/user.types";
+import { useCreateUser } from "../api/users.queries";
+import { toast } from "sonner";
 
 export default function NewUserForm() {
   const [form, setForm] = useState<CreateUserPayload>({
@@ -12,29 +13,86 @@ export default function NewUserForm() {
     password: "",
   });
 
+  const { mutate, isPending } = useCreateUser();
+
   const handleChange = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = async () => {
-    await createUserRequest(form);
-    alert("User created");
+  const handleSubmit = () => {
+    // basic validation
+    if (!form.email || !form.username || !form.password) {
+      toast.error("Bitte Pflichtfelder ausfüllen");
+      return;
+    }
+
+    mutate(form, {
+      onSuccess: () => {
+        // optional: reset form
+        setForm({
+          firstName: "",
+          lastName: "",
+          username: "",
+          email: "",
+          password: "",
+        });
+      },
+      onError: (err: any) => {
+        toast.error(
+          err?.response?.data?.message ||
+          err?.response?.data?.error ||
+          "Fehler beim Erstellen des Users"
+        );
+      },
+    });
   };
 
   return (
     <div className="flex-1 p-8">
       <div className="max-w-xl space-y-4">
-        <InputField label="Vorname" onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange("firstName", e.target.value)} />
-        <InputField label="Nachname" onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange("lastName", e.target.value)} />
-        <InputField label="Benutzername" onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange("username", e.target.value)} />
-        <InputField label="Email" onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange("email", e.target.value)} />
-        <InputField label="Passwort" onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange("password", e.target.value)} />
+        <InputField
+          label="Vorname"
+          value={form.firstName}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            handleChange("firstName", e.target.value)
+          }
+        />
+        <InputField
+          label="Nachname"
+          value={form.lastName}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            handleChange("lastName", e.target.value)
+          }
+        />
+        <InputField
+          label="Benutzername"
+          value={form.username}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            handleChange("username", e.target.value)
+          }
+        />
+        <InputField
+          label="Email"
+          value={form.email}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            handleChange("email", e.target.value)
+          }
+        />
+        <InputField
+          label="Passwort"
+          type="password"
+          value={form.password}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            handleChange("password", e.target.value)
+          }
+        />
 
         <button
           onClick={handleSubmit}
-          className="bg-blue-500 text-white px-6 py-2 rounded shadow hover:bg-blue-600"
+          disabled={isPending}
+          className="bg-blue-500 text-white px-6 py-2 rounded shadow hover:bg-blue-600 disabled:opacity-50"
         >
-          Benutzer anlegen
+          {isPending ? "Wird erstellt..." : "Benutzer anlegen"}
         </button>
       </div>
     </div>
