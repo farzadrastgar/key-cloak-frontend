@@ -48,7 +48,7 @@ export default function NewUserForm() {
   };
 
   return (
-    <div className="flex-1 p-8">
+    <div className="flex-1 p-8 bg-white m-2">
       <div className="max-w-xl space-y-4">
         <InputField
           label="Vorname"

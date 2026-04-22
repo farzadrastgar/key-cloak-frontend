@@ -14,7 +14,7 @@ const ToggleCard: React.FC<Props> = ({
     onToggle,
 }) => {
     return (
-        <div className="flex items-center justify-between bg-white p-5 rounded-xl shadow-sm border">
+        <div className="flex items-center justify-between bg-white p-5  shadow-sm ">
             <div className="max-w-lg">
                 <h3 className="font-medium text-gray-900">{title}</h3>
                 <p className="text-sm text-gray-500 mt-1">{description}</p>

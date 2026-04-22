@@ -13,7 +13,7 @@ const SubSidebar: React.FC = () => {
     ];
 
     return (
-        <div className="w-80 bg-white rounded-xl shadow-sm border p-4">
+        <div className="w-80 bg-white  shadow-sm  p-4">
             <h3 className="font-semibold text-gray-800 mb-4">
                 Authentifizierungs Einstellungen
             </h3>

@@ -10,7 +10,7 @@ const UsersPage: React.FC = () => {
   const [search, setSearch] = useState("");
 
 
-  const { data, isLoading } = useUsers(search);
+  const { data } = useUsers(search);
   const users = data?.data || [];
   const handleSelectUser = (user: User) => {
     setSelectedUser((prev) => (prev?.id === user.id ? null : user));
@@ -19,7 +19,7 @@ const UsersPage: React.FC = () => {
 
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-50">
 
       <UserList
         users={users}

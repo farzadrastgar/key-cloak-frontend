@@ -22,7 +22,7 @@ const List = ({
   };
 
   return (
-    <div className="w-1/3 bg-white border-r p-4">
+    <div className="w-1/3 bg-white p-4 m-2">
       <InputField
         label="Benutzer suchen"
         value={search}

@@ -5,6 +5,7 @@ import {
     updateUserRequest,
     deleteUserRequest,
     resetUserPasswordRequest,
+    toggleUserStatusRequest,
 } from "./users.api";
 import type {
     CreateUserPayload,
@@ -78,6 +79,34 @@ export const useResetPassword = () => {
 
         onSuccess: () => {
             toast.success("Password updated");
+        },
+    });
+};
+
+export const useToggleUserStatus = () => {
+    const qc = useQueryClient();
+
+    return useMutation({
+        mutationFn: ({
+            id,
+            active,
+        }: {
+            id: string;
+            active: boolean;
+        }) =>
+            toggleUserStatusRequest(id, { active }),
+
+        onSuccess: () => {
+            qc.invalidateQueries({ queryKey: ["users"] });
+            toast.success("Status aktualisiert");
+        },
+
+        onError: (err: any) => {
+            toast.error(
+                err?.response?.data?.message ||
+                err?.response?.data?.error ||
+                "Fehler beim Aktualisieren des Status"
+            );
         },
     });
 };
