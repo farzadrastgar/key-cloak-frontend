@@ -1,16 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { Organization } from "../types";
-import { getOrganizationsRequest } from "../api";
-
+import { getOrganizationsRequest } from "./api/organizations.api";
 
 interface Props {
     value?: Organization | null;
     onChange?: (org: Organization | null) => void;
     placeholder?: string;
 }
-
-
 
 export const OrganizationSelect: React.FC<Props> = ({
     value,

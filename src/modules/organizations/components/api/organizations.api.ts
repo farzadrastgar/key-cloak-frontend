@@ -1,5 +1,5 @@
-import api from "../../services/apiClient";
-import type { AssignUsersPayload, CreateOrganizationPayload, Organization, UpdateOrganizationPayload } from "./types";
+import api from "../../../../services/apiClient";
+import type { AssignUsersPayload, CreateOrganizationPayload, Organization } from "../../types";
 
 
 export const getOrganizationsRequest = async (search?: string) => {
@@ -23,17 +23,6 @@ export const getOrganizationByIdRequest = async (id: string) => {
     return data;
 };
 
-// UPDATE ORGANIZATION
-export const updateOrganizationRequest = async (
-    id: string,
-    payload: UpdateOrganizationPayload
-) => {
-    const { data } = await api.patch<Organization>(
-        `/organizations/${id}`,
-        payload
-    );
-    return data;
-};
 
 // DELETE ORGANIZATION
 export const deleteOrganizationRequest = async (id: string) => {

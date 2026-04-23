@@ -57,6 +57,13 @@ export default function InvitationPanel({
         mutate({
             emails: allEmails,
             organizationId: selectedOrg.id,
+        }, {
+            onSuccess: () => {
+                // ✅ CLEAR EVERYTHING
+                setManualEmails("");
+                setSelectedOrg(null);
+                setSelectedUsers([]);
+            },
         });
     };
 
