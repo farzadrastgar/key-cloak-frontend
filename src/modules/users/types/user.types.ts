@@ -2,6 +2,8 @@
 // TYPES
 // =========================
 
+import type { Organization } from "../../organizations/types";
+
 export type User = {
     id: string;
     email: string;
@@ -10,15 +12,18 @@ export type User = {
     lastName?: string;
     active?: boolean;
     phoneNumber: string
+    organizations: Pick<Organization, "id" | "name">[]
 };
 
-export type CreateUserPayload = {
-    email: string;
+export interface CreateUserPayload {
+    firstName: string;
+    lastName: string;
     username: string;
+    email: string;
     password: string;
-    firstName?: string;
-    lastName?: string;
-};
+    phoneNumber?: string;
+    organizationId?: string;
+}
 
 export type UpdateUserPayload = {
     email?: string;

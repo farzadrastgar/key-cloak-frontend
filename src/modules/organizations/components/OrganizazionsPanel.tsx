@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { OrganizationSelect } from "./OrganizationSelect";
 import type { Organization } from "../types";
 import { Button } from "../../../shared/components/ui/Button";
 import NewOrganizationModal from "./modals/NewOrganizationModal";
@@ -8,6 +7,7 @@ import OrganizationList from "./OrganizationList";
 
 const OrganizationPanel = () => {
     const [selectedOrg, setSelectedOrg] = useState<Organization | null>(null);
+    const [search, setSearch] = useState("");
 
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -18,47 +18,36 @@ const OrganizationPanel = () => {
                 Organizations
             </h2>
 
-            {/* Select Organization */}
-            <div>
-                <label className="text-sm text-gray-600">
-                    Organization auswählen
-                </label>
+            {/* SEARCH */}
+            <div className="flex items-center gap-2">
+                <input
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search organizations..."
+                    className="flex-1 px-3 py-2 border rounded"
+                />
 
-                <div className="mt-2 flex gap-2">
-                    <div className="flex-1">
-                        <OrganizationSelect
-                            value={selectedOrg}
-                            onChange={setSelectedOrg}
-                        />
-                    </div>
+                <Button onClick={() => setShowCreateModal(true)}>
+                    Erstellen
+                </Button>
 
-                    <Button
-                        variant="primary"
-                        onClick={() => setShowCreateModal(true)}
-                    >
-                        Erstellen
-                    </Button>
-
-                    <Button
-                        variant="danger"
-                        disabled={!selectedOrg}
-                        onClick={() => setShowDeleteModal(true)}
-                    >
-                        Löschen
-                    </Button>
-                </div>
+                <Button
+                    variant="danger"
+                    disabled={!selectedOrg}
+                    onClick={() => setShowDeleteModal(true)}
+                >
+                    Löschen
+                </Button>
             </div>
 
-            {/* Organization List */}
-            <div>
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
-                    Alle Organisationen
-                </h3>
+            {/* LIST */}
+            <OrganizationList
+                search={search}
+                selectedOrg={selectedOrg}
+                onSelect={setSelectedOrg}
+            />
 
-                <OrganizationList />
-            </div>
-
-            {/* Modals */}
+            {/* MODALS */}
             {showCreateModal && (
                 <NewOrganizationModal
                     onClose={() => setShowCreateModal(false)}

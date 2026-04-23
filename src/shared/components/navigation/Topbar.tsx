@@ -19,7 +19,7 @@ const Topbar = () => {
   return (
     <header className="bg-white shadow-md px-6 py-4 flex justify-between items-center border-b relative">
       {/* Title */}
-      <h1 className="text-xl font-bold text-gray-800">Belzir</h1>
+      <h1 className="text-xl font-bold text-gray-800">Key Cloak</h1>
 
       {/* Menu */}
       <div className="relative">

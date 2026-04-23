@@ -5,7 +5,7 @@ import ResetPasswordModal from "./modals/ResetPasswordModal";
 import type { User } from "../types/user.types";
 import UserMenu from "./UserMenu";
 import { useToggleUserStatus } from "../api/users.queries";
-import { Mail, Phone, UserCircle } from "lucide-react";
+import { Mail, Phone, UserCircle, X } from "lucide-react";
 export default function ViewUser({ user }: { user: User }) {
   const [openModal, setOpenModal] = useState<string | null>(null);
   const { mutate, isPending } = useToggleUserStatus();
@@ -15,6 +15,12 @@ export default function ViewUser({ user }: { user: User }) {
       id: user.id,
       active: !user.active,
     });
+  };
+
+  const handleRemoveOrg = (orgId: string) => {
+    console.log("remove org", orgId);
+    // call your mutation here
+    // removeUserFromOrg({ userId: user.id, orgId })
   };
 
   return (
@@ -119,6 +125,36 @@ export default function ViewUser({ user }: { user: User }) {
             </p>
           </div>
         </div>
+
+        <h3 className="text-blue-600 font-medium mb-2">
+          Organizationen wechseln
+        </h3>
+
+        {user.organizations && user.organizations.length > 0 ? (
+          <div className="flex flex-wrap gap-2">
+            {user.organizations.map((org) => (
+              <div
+                key={org.id}
+                className="flex items-center gap-2 bg-blue-100 text-blue-700 px-3 py-1 text-sm"
+              >
+
+                <span>{org.name}</span>
+
+                {/* X button on LEFT */}
+                <button
+                  onClick={() => handleRemoveOrg(org.id)}
+                  className="hover:text-red-500"
+                >
+                  <X size={14} className="cursor-pointer" />
+
+                </button>
+
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-400 text-sm">Keine Organisationen</p>
+        )}
       </div>
 
       {/* Modals */}

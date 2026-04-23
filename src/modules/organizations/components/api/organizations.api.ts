@@ -1,9 +1,9 @@
 import api from "../../../../services/apiClient";
-import type { AssignUsersPayload, CreateOrganizationPayload, Organization } from "../../types";
+import type { AssignUsersPayload, CreateOrganizationPayload, getOrganizationsResponse, Organization } from "../../types";
 
 
-export const getOrganizationsRequest = async (search?: string) => {
-    const { data } = await api.get<Organization[]>("/organizations", {
+export const getOrganizationsRequest = async (search?: string): Promise<Organization[]> => {
+    const { data } = await api.get<getOrganizationsResponse>("/organizations", {
         params: search ? { search } : undefined,
     });
     return data.data;

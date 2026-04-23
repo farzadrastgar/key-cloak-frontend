@@ -3,6 +3,8 @@ import InputField from "../../../shared/components/ui/InputField";
 import type { CreateUserPayload } from "../types/user.types";
 import { useCreateUser } from "../api/users.queries";
 import { toast } from "sonner";
+import { OrganizationSelect } from "../../organizations/components/OrganizationSelect"; // adjust path
+import type { Organization } from "../../organizations/types";
 
 export default function NewUserForm() {
   const [form, setForm] = useState<CreateUserPayload>({
@@ -11,7 +13,11 @@ export default function NewUserForm() {
     username: "",
     email: "",
     password: "",
+    phoneNumber: "",
+    organizationId: undefined,
   });
+
+  const [selectedOrg, setSelectedOrg] = useState<Organization | null>(null);
 
   const { mutate, isPending } = useCreateUser();
 
@@ -21,8 +27,8 @@ export default function NewUserForm() {
 
   const handleSubmit = () => {
     // basic validation
-    if (!form.email || !form.username || !form.password) {
-      toast.error("Bitte Pflichtfelder ausfüllen");
+    if (!form.email || !form.username) {
+      toast.error("Email und Benutzername sind Pflichtfelder");
       return;
     }
 
@@ -86,6 +92,31 @@ export default function NewUserForm() {
             handleChange("password", e.target.value)
           }
         />
+
+        <InputField
+          label="Telefonnummer"
+          value={form.phoneNumber || ""}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            handleChange("phoneNumber", e.target.value)
+          }
+        />
+
+        <div>
+          <label className="block text-sm mb-1 text-gray-600">
+            Organisation
+          </label>
+
+          <OrganizationSelect
+            value={selectedOrg}
+            onChange={(org) => {
+              setSelectedOrg(org);
+              setForm((prev) => ({
+                ...prev,
+                organizationId: org?.id,
+              }));
+            }}
+          />
+        </div>
 
         <button
           onClick={handleSubmit}
