@@ -6,7 +6,7 @@ export const getOrganizationsRequest = async (search?: string) => {
     const { data } = await api.get<Organization[]>("/organizations", {
         params: search ? { search } : undefined,
     });
-    return data;
+    return data.data;
 };
 
 // CREATE ORGANIZATION

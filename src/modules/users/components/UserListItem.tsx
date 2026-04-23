@@ -1,14 +1,26 @@
 import type { User } from "../types/user.types";
 import { UserCircle } from "lucide-react";
 
-function UserListItem({ user, isSelected }: { user: User, isSelected: boolean }) {
+function UserListItem({
+  user,
+  isSelected,
+
+}: {
+  user: User;
+  isSelected: boolean;
+  showCheckbox?: boolean;
+}) {
   return (
-    <div className="flex justify-between items-center p-2 hover:bg-gray-100 rounded cursor-pointer">
+    <div
+      className={`flex justify-between items-center p-2 rounded cursor-pointer transition
+        ${isSelected ? "bg-blue-50" : "hover:bg-gray-100"}
+      `}
+    >
       <div className="flex items-center gap-3">
-        {/* Column 1: Icon */}
+        {/* Icon */}
         <UserCircle className="w-6 h-6 text-gray-500" />
 
-        {/* Column 2: Text */}
+        {/* Text */}
         <div>
           <div className="font-medium">
             {`${user.firstName} ${user.lastName}`}
@@ -18,13 +30,18 @@ function UserListItem({ user, isSelected }: { user: User, isSelected: boolean })
           </div>
         </div>
       </div>
+
+
       <input
         type="checkbox"
         checked={isSelected}
         readOnly
-        onClick={(e) => e.stopPropagation()} />
+        onClick={(e) => e.stopPropagation()} // prevents row click duplication
+        className="cursor-pointer"
+      />
+
     </div>
   );
 }
 
-export default UserListItem
+export default UserListItem;

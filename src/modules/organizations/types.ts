@@ -2,11 +2,14 @@
 // TYPES
 // =========================
 
-export type Organization = {
+export interface Organization {
     id: string;
     name: string;
+    description?: string | null;
+    createdAt: string;
     parentId?: string | null;
-};
+    children?: Organization[];
+}
 
 export type CreateOrganizationPayload = {
     name: string;
