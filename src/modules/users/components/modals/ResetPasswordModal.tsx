@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent } from "react";
-import { Modal } from "../../../../components/ui/Modal";
-import type { BaseModalProps } from "../../../../components/ui/types/modal.types";
+import { Modal } from "../../../../shared/components/ui/Modal";
+import type { BaseModalProps } from "../../../../shared/components/ui/types/modal.types";
 import type { User } from "../../types/user.types";
 import { useResetPassword } from "../../api/users.queries";
 import { toast } from "sonner";

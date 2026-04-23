@@ -1,5 +1,5 @@
-import { Modal, ModalActions } from "../../../../components/ui/Modal";
-import type { BaseModalProps } from "../../../../components/ui/types/modal.types";
+import { Modal, ModalActions } from "../../../../shared/components/ui/Modal";
+import type { BaseModalProps } from "../../../../shared/components/ui/types/modal.types";
 
 export default function EditUserModal({ onClose }: BaseModalProps) {
     return (

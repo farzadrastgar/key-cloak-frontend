@@ -5,6 +5,7 @@ import ResetPasswordModal from "./modals/ResetPasswordModal";
 import type { User } from "../types/user.types";
 import UserMenu from "./UserMenu";
 import { useToggleUserStatus } from "../api/users.queries";
+import { Mail, Phone, UserCircle } from "lucide-react";
 export default function ViewUser({ user }: { user: User }) {
   const [openModal, setOpenModal] = useState<string | null>(null);
   const { mutate, isPending } = useToggleUserStatus();
@@ -44,11 +45,79 @@ export default function ViewUser({ user }: { user: User }) {
           </div>
         </div>
 
-        {/* User Info */}
-        <div className="space-y-2 text-gray-700">
-          <p><strong>Username:</strong> {user.username}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Phone:</strong> -</p>
+        <div className="grid grid-cols-2 gap-10 mb-6 text-sm">
+          {/* Row 1 - Left */}
+          <div className="space-y-4">
+            {/* Username */}
+            <div>
+              <div className="flex items-center gap-2 text-gray-500">
+                <UserCircle size={16} className="text-gray-400" />
+                <span>Username</span>
+              </div>
+              <p>{user.username || "-"}</p>
+            </div>
+
+            {/* Email */}
+            <div>
+              <div className="flex items-center gap-2 text-gray-500">
+                <Mail size={16} className="text-gray-400" />
+                <span>Email</span>
+              </div>
+              <p>{user.email || "-"}</p>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-2 text-gray-500">
+                <Phone size={16} className="text-gray-400" />
+                <span>Telephone</span>
+              </div>
+              <p >{user.phoneNumber || "-"}</p>
+            </div>
+          </div>
+
+          {/* Row 1 - Right */}
+          <div>
+            <h3 className="text-blue-600 font-medium mb-2">
+              Globale Berechtigungen
+            </h3>
+            <div className="space-y-2">
+              <label className="flex items-center gap-2">
+                <input type="checkbox" />
+                Systemadministrator
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="checkbox" />
+                Globaler Benutzeradministrator
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="checkbox" />
+                Globaler 3rd-Level Benutzer
+              </label>
+            </div>
+          </div>
+
+
+
+          {/* Row 2 - Right */}
+          <div>
+            <h3 className="text-blue-600 font-medium mb-2">
+              Benutzer Authentifizierung
+            </h3>
+            <p className="text-gray-600">
+              Der Benutzer kann sich momentan nicht anmelden. Wenn die globalen Einstellungen eine Authentifizierung zulassen muss der Benutzer seine Konfiguration noch abschließen.
+            </p>
+          </div>
+
+          {/* Row 2 - Left */}
+          <div>
+            <h3 className="text-blue-600 font-medium mb-2">
+              Multifaktor Authentifizierung
+            </h3>
+            <p className="text-gray-600">
+              Entweder sehen die globalen Einstellungen keine 2-FA Authentifizierung vor oder der
+              Benutzer hat kein Gerät dafür eingerichtet.
+            </p>
+          </div>
         </div>
       </div>
 

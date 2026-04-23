@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Menu, LayoutDashboard, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../../hooks/useAuth";
 
 const Topbar = () => {
   const [showDropDown, setShowDropDown] = useState(false);

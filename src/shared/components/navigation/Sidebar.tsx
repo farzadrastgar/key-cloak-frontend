@@ -1,15 +1,15 @@
 import SidebarItem from "./SidebarItem";
 import SidebarMenu from "./SidebarMenu"
-import { Calendar, Layers, LayoutDashboard, Settings, StickyNote } from "lucide-react"
+import { Building2, LayoutDashboard, Settings, UserPlus, Users } from "lucide-react"
 
 
 export default function Sidebar() {
   return (
     <SidebarMenu>
       <SidebarItem icon={<LayoutDashboard size={20} />} text="Dashboard" to="/dashboard" />
-      <SidebarItem icon={<StickyNote size={20} />} text="Invitations" to="/invitations" />
-      <SidebarItem icon={<Calendar size={20} />} text="Organizations" to="/organizations" />
-      <SidebarItem icon={<Layers size={20} />} text="Users" to="/users" />
+      <SidebarItem icon={<UserPlus size={20} />} text="Invitations" to="/invitations" />
+      <SidebarItem icon={<Building2 size={20} />} text="Organizations" to="/organizations" />
+      <SidebarItem icon={<Users size={20} />} text="Users" to="/users" />
       <hr className="my-3" />
       <SidebarItem icon={<Settings size={20} />} text="Settings" to="/settings" />
     </SidebarMenu>

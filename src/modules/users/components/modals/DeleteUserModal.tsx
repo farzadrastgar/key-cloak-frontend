@@ -1,4 +1,4 @@
-import { Modal } from "../../../../components/ui/Modal";
+import { Modal } from "../../../../shared/components/ui/Modal";
 import { useDeleteUser } from "../../api/users.queries";
 import type { DeleteUserModalProps } from "../../types/user-ui.types";
 

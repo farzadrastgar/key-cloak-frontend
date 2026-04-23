@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent } from "react";
-import InputField from "../../../components/ui/InputField";
+import InputField from "../../../shared/components/ui/InputField";
 import type { CreateUserPayload } from "../types/user.types";
 import { useCreateUser } from "../api/users.queries";
 import { toast } from "sonner";

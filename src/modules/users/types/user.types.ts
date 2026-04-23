@@ -9,6 +9,7 @@ export type User = {
     firstName?: string;
     lastName?: string;
     active?: boolean;
+    phoneNumber: string
 };
 
 export type CreateUserPayload = {
