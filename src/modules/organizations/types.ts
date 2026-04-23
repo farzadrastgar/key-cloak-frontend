@@ -13,7 +13,7 @@ export interface Organization {
     id: string;
     name: string;
     description?: string | null;
-    createdAt: string;
+    createdAt?: string;
 
     parentId?: string | null;
     parent?: Organization | null;

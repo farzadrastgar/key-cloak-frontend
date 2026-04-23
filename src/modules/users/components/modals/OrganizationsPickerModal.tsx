@@ -5,7 +5,7 @@ import { OrganizationSelect } from "../../../organizations/components/Organizati
 
 interface Props {
     onClose: () => void;
-    onSubmit: (org: Organization | null) => void;
+    onSubmit: (org: Organization) => void;
 }
 
 export default function OrganizationPickerModal({

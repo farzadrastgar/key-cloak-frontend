@@ -43,6 +43,13 @@ export const useCreateUser = () => {
             qc.invalidateQueries({ queryKey: ["users"] });
             toast.success("User created");
         },
+        onError: (err: any) => {
+            toast.error(
+                err?.response?.data?.message ||
+                err?.response?.data?.error ||
+                "Fehler beim Anlegen des Benutzer"
+            );
+        },
     });
 };
 
@@ -62,6 +69,13 @@ export const useUpdateUser = () => {
             qc.invalidateQueries({ queryKey: ["users"] });
             toast.success("User updated");
         },
+        onError: (err: any) => {
+            toast.error(
+                err?.response?.data?.message ||
+                err?.response?.data?.error ||
+                "Fehler beim Speichern des Benutzer"
+            );
+        },
     });
 };
 
@@ -74,6 +88,13 @@ export const useDeleteUser = () => {
         onSuccess: () => {
             qc.invalidateQueries({ queryKey: ["users"] });
             toast.success("User deleted");
+        },
+        onError: (err: any) => {
+            toast.error(
+                err?.response?.data?.message ||
+                err?.response?.data?.error ||
+                "Fehler beim Loschen des Benutzer"
+            );
         },
     });
 };
@@ -90,6 +111,13 @@ export const useResetPassword = () => {
 
         onSuccess: () => {
             toast.success("Password updated");
+        },
+        onError: (err: any) => {
+            toast.error(
+                err?.response?.data?.message ||
+                err?.response?.data?.error ||
+                "Fehler beim Reset Passwort"
+            );
         },
     });
 };

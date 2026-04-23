@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InputField from "../../../shared/components/ui/InputField";
 import type { CreateUserPayload, User } from "../types/user.types";
 import { useCreateUser, useUpdateUser } from "../api/users.queries";
@@ -14,39 +14,25 @@ interface Props {
 
 export default function NewUserForm({ user, onCancel }: Props) {
   const isEdit = !!user;
-
-  const [form, setForm] = useState<CreateUserPayload>({
-    firstName: "",
-    lastName: "",
-    username: "",
-    email: "",
+  const [form, setForm] = useState<CreateUserPayload>(() => ({
+    firstName: user?.firstName ?? "",
+    lastName: user?.lastName ?? "",
+    username: user?.username ?? "",
+    email: user?.email ?? "",
     password: "",
-    phoneNumber: "",
-    organizationIds: [],
-  });
+    phoneNumber: user?.phoneNumber ?? "",
+    organizationIds:
+      user?.memberships?.map(m => m.organization.id) ?? [],
+  }));
 
-  const [selectedOrgs, setSelectedOrgs] = useState<Organization[]>([]);
+  const [selectedOrgs, setSelectedOrgs] = useState<Organization[]>(
+    () => user?.memberships?.map(m => m.organization) ?? []
+  );
   const [openPicker, setOpenPicker] = useState(false);
 
   const { mutate: createUser, isPending: isCreating } = useCreateUser();
   const { mutate: updateUser, isPending: isUpdating } = useUpdateUser();
 
-  // ✅ populate for edit
-  useEffect(() => {
-    if (user) {
-      setForm({
-        firstName: user.firstName || "",
-        lastName: user.lastName || "",
-        username: user.username,
-        email: user.email,
-        password: "",
-        phoneNumber: user.phoneNumber || "",
-        organizationIds: user.organizations?.map((o) => o.id) || [],
-      });
-
-      setSelectedOrgs(user.organizations || []);
-    }
-  }, [user]);
 
   const handleChange = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -86,21 +72,10 @@ export default function NewUserForm({ user, onCancel }: Props) {
         {
           id: user.id,
           payload: form,
-        },
-        {
-          onSuccess: () => {
-            toast.success("User updated");
-            onCancel?.(); // 👈 exit edit mode
-          },
         }
       );
     } else {
-      createUser(form, {
-        onSuccess: () => {
-          toast.success("User created");
-          setSelectedOrgs([]);
-        },
-      });
+      createUser(form);
     }
   };
 
