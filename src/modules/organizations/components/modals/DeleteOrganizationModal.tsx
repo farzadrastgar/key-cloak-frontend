@@ -1,5 +1,5 @@
 import { Modal } from "../../../../shared/components/ui/Modal";
-import { useDeleteOrganization } from "../api/organizations.queries";
+import { useDeleteOrganization } from "../../api/organizations.queries";
 import type { Organization } from "../../types";
 
 export default function DeleteOrganizationModal({

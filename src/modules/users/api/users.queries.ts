@@ -6,6 +6,7 @@ import {
     deleteUserRequest,
     resetUserPasswordRequest,
     toggleUserStatusRequest,
+    getUserByIdRequest,
 } from "./users.api";
 import type {
     CreateUserPayload,
@@ -13,6 +14,16 @@ import type {
     ResetPasswordPayload,
 } from "../types/user.types";
 import { toast } from "sonner";
+
+export const useUser = (id: string) => {
+    const data = useQuery({
+        queryKey: ["user", id],
+        queryFn: () => getUserByIdRequest(id),
+        enabled: !!id,
+    });
+
+    return data
+};
 
 export const useUsers = (search?: string) => {
     return useQuery({

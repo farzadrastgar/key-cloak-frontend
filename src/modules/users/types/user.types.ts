@@ -12,7 +12,9 @@ export type User = {
     lastName?: string;
     active?: boolean;
     phoneNumber: string
-    organizations: Pick<Organization, "id" | "name">[]
+    memberships: {
+        organization: Pick<Organization, "id" | "name">;
+    }[];
 };
 
 export interface CreateUserPayload {
@@ -22,7 +24,7 @@ export interface CreateUserPayload {
     email: string;
     password: string;
     phoneNumber?: string;
-    organizationId?: string;
+    organizationIds?: string[];
 }
 
 export type UpdateUserPayload = {
@@ -31,6 +33,7 @@ export type UpdateUserPayload = {
     firstName?: string;
     lastName?: string;
     active?: boolean;
+    organizationIds?: string[];
 };
 
 export type ResetPasswordPayload = {

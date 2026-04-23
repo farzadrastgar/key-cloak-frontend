@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import ToggleCard from "../components/ToggleCard";
 import SubSidebar from "../components/SubSideBar";
 import {
@@ -34,17 +35,16 @@ const AuthenticationSettingsPage = () => {
             [key]: !settings[key],
         };
 
-        // optimistic update
-        setSettings(updated);
+        setSettings(updated); // optimistic
 
         try {
             await updateAuthSettingsRequest(updated);
+            toast.success("Einstellung erfolgreich aktualisiert");
         } catch (err) {
-            // rollback on failure
-            setSettings(settings);
+            setSettings(settings); // rollback
+            toast.error("Fehler beim Aktualisieren");
         }
     };
-
     if (loading || !settings) {
         return <div className="p-6">Loading settings...</div>;
     }

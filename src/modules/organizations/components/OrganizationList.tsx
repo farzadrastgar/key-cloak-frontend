@@ -1,4 +1,4 @@
-import { useOrganizations } from "./api/organizations.queries";
+import { useOrganizations } from "../api/organizations.queries";
 import OrganizationListItem from "./OrganizationsListItem";
 import type { Organization } from "../types";
 

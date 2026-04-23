@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Modal } from "../../../../shared/components/ui/Modal";
 import { OrganizationSelect } from "../OrganizationSelect";
-import { useCreateOrganization } from "../api/organizations.queries";
+import { useCreateOrganization } from "../../api/organizations.queries";
 import type { Organization } from "../../types";
 
 export default function NewOrganizationModal({ onClose }: { onClose: () => void }) {

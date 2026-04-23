@@ -1,31 +1,63 @@
 import { useState } from "react";
 import DeleteUserModal from "./modals/DeleteUserModal";
-import EditUserModal from "./modals/EditUserModal";
 import ResetPasswordModal from "./modals/ResetPasswordModal";
-import type { User } from "../types/user.types";
 import UserMenu from "./UserMenu";
-import { useToggleUserStatus } from "../api/users.queries";
 import { Mail, Phone, UserCircle, X } from "lucide-react";
-export default function ViewUser({ user }: { user: User }) {
+
+import { useToggleUserStatus, useUser } from "../api/users.queries";
+import { useUnassignUserFromOrganization } from "../../organizations/api/organizations.queries";
+import { useQueryClient } from "@tanstack/react-query";
+
+export default function ViewUser({ userId }: { userId: string }) {
   const [openModal, setOpenModal] = useState<string | null>(null);
-  const { mutate, isPending } = useToggleUserStatus();
+
+  const qc = useQueryClient();
+
+  const { data: user, isLoading } = useUser(userId);
+
+
+  const { mutate: toggleStatus, isPending: isToggling } = useToggleUserStatus();
+
+  const { mutate: unassignOrg, isPending: isRemovingOrg } =
+    useUnassignUserFromOrganization();
+
+  if (isLoading || !user) {
+    return <div className="p-4">Loading...</div>;
+  }
 
   const handleToggle = () => {
-    mutate({
-      id: user.id,
-      active: !user.active,
-    });
+    toggleStatus(
+      {
+        id: user.id,
+        active: !user.active,
+      },
+      {
+        onSuccess: () => {
+          qc.invalidateQueries({ queryKey: ["users"] });
+          qc.invalidateQueries({ queryKey: ["user", userId] });
+        },
+      }
+    );
   };
 
   const handleRemoveOrg = (orgId: string) => {
-    console.log("remove org", orgId);
-    // call your mutation here
-    // removeUserFromOrg({ userId: user.id, orgId })
+    unassignOrg(
+      {
+        orgId,
+        userId: user.id,
+      },
+      {
+        onSuccess: () => {
+          qc.invalidateQueries({ queryKey: ["users"] });
+          qc.invalidateQueries({ queryKey: ["user", userId] });
+        },
+      }
+    );
   };
 
   return (
     <div className="p-2 bg-gray-50 min-h-screen">
-      <div className="bg-white  shadow p-6 max-w-4xl mx-auto">
+      <div className="bg-white shadow p-6 max-w-4xl mx-auto">
 
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
@@ -36,37 +68,37 @@ export default function ViewUser({ user }: { user: User }) {
           <div className="flex items-center gap-4">
             <button
               onClick={handleToggle}
-              disabled={isPending}
-              className={`w-12 h-6 flex items-center rounded-full p-1 transition ${user.active ? "bg-blue-500" : "bg-gray-300"
-                } ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
+              disabled={isToggling}
+              className={`w-12 h-6 flex items-center rounded-full p-1 transition 
+                ${user.active ? "bg-blue-500" : "bg-gray-300"}
+                ${isToggling ? "opacity-50 cursor-not-allowed" : ""}
+              `}
             >
               <div
-                className={`bg-white w-4 h-4 rounded-full shadow transform transition ${user.active ? "translate-x-6" : ""
-                  }`}
+                className={`bg-white w-4 h-4 rounded-full shadow transform transition 
+                  ${user.active ? "translate-x-6" : ""}
+                `}
               />
             </button>
-
 
             <UserMenu onSelect={setOpenModal} />
           </div>
         </div>
 
+        {/* INFO */}
         <div className="grid grid-cols-2 gap-10 mb-6 text-sm">
-          {/* Row 1 - Left */}
           <div className="space-y-4">
-            {/* Username */}
             <div>
               <div className="flex items-center gap-2 text-gray-500">
-                <UserCircle size={16} className="text-gray-400" />
+                <UserCircle size={16} />
                 <span>Username</span>
               </div>
               <p>{user.username || "-"}</p>
             </div>
 
-            {/* Email */}
             <div>
               <div className="flex items-center gap-2 text-gray-500">
-                <Mail size={16} className="text-gray-400" />
+                <Mail size={16} />
                 <span>Email</span>
               </div>
               <p>{user.email || "-"}</p>
@@ -74,14 +106,12 @@ export default function ViewUser({ user }: { user: User }) {
 
             <div>
               <div className="flex items-center gap-2 text-gray-500">
-                <Phone size={16} className="text-gray-400" />
+                <Phone size={16} />
                 <span>Telephone</span>
               </div>
-              <p >{user.phoneNumber || "-"}</p>
+              <p>{user.phoneNumber || "-"}</p>
             </div>
           </div>
-
-          {/* Row 1 - Right */}
           <div>
             <h3 className="text-blue-600 font-medium mb-2">
               Globale Berechtigungen
@@ -101,9 +131,6 @@ export default function ViewUser({ user }: { user: User }) {
               </label>
             </div>
           </div>
-
-
-
           {/* Row 2 - Right */}
           <div>
             <h3 className="text-blue-600 font-medium mb-2">
@@ -124,31 +151,31 @@ export default function ViewUser({ user }: { user: User }) {
               Benutzer hat kein Gerät dafür eingerichtet.
             </p>
           </div>
+
+          {/* (rest unchanged) */}
         </div>
 
+        {/* ORGS */}
         <h3 className="text-blue-600 font-medium mb-2">
           Organizationen wechseln
         </h3>
 
-        {user.organizations && user.organizations.length > 0 ? (
+        {user.memberships?.length > 0 ? (
           <div className="flex flex-wrap gap-2">
-            {user.organizations.map((org) => (
+            {user.memberships.map((org) => (
               <div
-                key={org.id}
+                key={org.organization.id}
                 className="flex items-center gap-2 bg-blue-100 text-blue-700 px-3 py-1 text-sm"
               >
+                <span>{org.organization.name}</span>
 
-                <span>{org.name}</span>
-
-                {/* X button on LEFT */}
                 <button
-                  onClick={() => handleRemoveOrg(org.id)}
+                  onClick={() => handleRemoveOrg(org.organization.id)}
+                  disabled={isRemovingOrg}
                   className="hover:text-red-500"
                 >
-                  <X size={14} className="cursor-pointer" />
-
+                  <X size={14} />
                 </button>
-
               </div>
             ))}
           </div>
@@ -157,17 +184,13 @@ export default function ViewUser({ user }: { user: User }) {
         )}
       </div>
 
-      {/* Modals */}
-      {
-        openModal === "edit" && (
-          <EditUserModal onClose={() => setOpenModal(null)} />
-        )
-      }
+
       {
         openModal === "delete" && (
           <DeleteUserModal onClose={() => setOpenModal(null)} user={user} />
         )
       }
+
       {
         openModal === "password" && (
           <ResetPasswordModal onClose={() => setOpenModal(null)} user={user} />

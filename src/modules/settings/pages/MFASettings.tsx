@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import SubSidebar from "../components/SubSideBar";
 import ToggleCard from "../components/ToggleCard";
 import {
@@ -36,9 +37,10 @@ const MFASettingsPage = () => {
 
         try {
             await updateMfaSettingsRequest(updated);
+            toast.success("MFA Einstellung gespeichert");
         } catch (err) {
-            console.log(err)
             setSettings(settings);
+            toast.error("Fehler beim Speichern der MFA Einstellung");
         }
     };
 

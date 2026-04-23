@@ -16,10 +16,9 @@ export const createUserRequest = async (payload: CreateUserPayload) => {
     return data;
 };
 
-// GET USER BY ID
 export const getUserByIdRequest = async (id: string) => {
-    const { data } = await api.get<User>(`/users/${id}`);
-    return data;
+    const { data } = await api.get<{ message: string; data: User }>(`/users/${id}`);
+    return data.data; // ✅ unwrap here
 };
 
 // UPDATE USER

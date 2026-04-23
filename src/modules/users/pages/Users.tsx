@@ -16,8 +16,6 @@ const UsersPage: React.FC = () => {
     setSelectedUser((prev) => (prev?.id === user.id ? null : user));
   };
 
-
-
   return (
     <div className="flex h-screen bg-gray-50">
 
@@ -30,7 +28,7 @@ const UsersPage: React.FC = () => {
 
       <div className="flex-1">
         {selectedUser ? (
-          <ViewUser user={selectedUser} />
+          <ViewUser userId={selectedUser.id} />
         ) : (
           <NewUserForm />
         )}
