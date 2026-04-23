@@ -1,5 +1,5 @@
 import api from "../../../services/apiClient";
-import type { CreateOrganizationPayload, getOrganizationsResponse, Organization } from "../types";
+import type { CreateOrganizationPayload, Organization } from "../types";
 
 
 export const getOrganizationsRequest = async (search?: string) => {

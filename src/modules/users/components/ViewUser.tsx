@@ -3,12 +3,18 @@ import DeleteUserModal from "./modals/DeleteUserModal";
 import ResetPasswordModal from "./modals/ResetPasswordModal";
 import UserMenu from "./UserMenu";
 import { Mail, Phone, UserCircle, X } from "lucide-react";
-
 import { useToggleUserStatus, useUser } from "../api/users.queries";
 import { useUnassignUserFromOrganization } from "../../organizations/api/organizations.queries";
 import { useQueryClient } from "@tanstack/react-query";
+import type { User } from "../types/user.types";
 
-export default function ViewUser({ userId }: { userId: string }) {
+export default function ViewUser({
+  userId,
+  onEdit,
+}: {
+  userId: string;
+  onEdit: (user: User) => void;
+}) {
   const [openModal, setOpenModal] = useState<string | null>(null);
 
   const qc = useQueryClient();
@@ -81,7 +87,13 @@ export default function ViewUser({ userId }: { userId: string }) {
               />
             </button>
 
-            <UserMenu onSelect={setOpenModal} />
+            <UserMenu onSelect={(action) => {
+              if (action === "edit") {
+                onEdit(user);
+                return;
+              }
+              setOpenModal(action);
+            }} />
           </div>
         </div>
 

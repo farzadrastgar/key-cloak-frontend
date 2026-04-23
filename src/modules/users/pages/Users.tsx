@@ -7,6 +7,7 @@ import { useUsers } from "../api/users.queries";
 
 const UsersPage: React.FC = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
   const [search, setSearch] = useState("");
 
 
@@ -27,8 +28,14 @@ const UsersPage: React.FC = () => {
       />
 
       <div className="flex-1">
-        {selectedUser ? (
-          <ViewUser userId={selectedUser.id} />
+        {editingUser ? (
+          <NewUserForm user={editingUser} onCancel={() => setEditingUser(null)}
+          />
+        ) : selectedUser ? (
+          <ViewUser
+            userId={selectedUser.id}
+            onEdit={(user) => setEditingUser(user)}
+          />
         ) : (
           <NewUserForm />
         )}

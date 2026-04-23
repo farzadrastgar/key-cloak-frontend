@@ -8,10 +8,11 @@ import type { Organization } from "../../organizations/types";
 import OrganizationPickerModal from "./modals/OrganizationsPickerModal";
 
 interface Props {
-  user?: User; // ✅ if exists = edit mode
+  user?: User;
+  onCancel?: () => void; // 👈 add this
 }
 
-export default function NewUserForm({ user }: Props) {
+export default function NewUserForm({ user, onCancel }: Props) {
   const isEdit = !!user;
 
   const [form, setForm] = useState<CreateUserPayload>({
@@ -87,7 +88,10 @@ export default function NewUserForm({ user }: Props) {
           payload: form,
         },
         {
-          onSuccess: () => toast.success("User updated"),
+          onSuccess: () => {
+            toast.success("User updated");
+            onCancel?.(); // 👈 exit edit mode
+          },
         }
       );
     } else {
@@ -179,22 +183,34 @@ export default function NewUserForm({ user }: Props) {
           )}
         </div>
 
-        <button
-          onClick={handleSubmit}
-          disabled={isCreating || isUpdating}
-          className="bg-blue-500 text-white px-6 py-2 rounded shadow hover:bg-blue-600 disabled:opacity-50"
-        >
-          {isEdit ? "Benutzer speichern" : "Benutzer anlegen"}
-        </button>
-      </div>
+        <div className="flex gap-2">
+          {isEdit && (
+            <button
+              onClick={onCancel}
+              className="px-6 py-2 rounded border border-gray-300 hover:bg-gray-100"
+            >
+              Abbrechen
+            </button>
+          )}
 
-      {/* ✅ MODAL */}
-      {openPicker && (
-        <OrganizationPickerModal
-          onClose={() => setOpenPicker(false)}
-          onSubmit={handleAddOrg}
-        />
-      )}
+          <button
+            onClick={handleSubmit}
+            disabled={isCreating || isUpdating}
+            className="bg-blue-500 text-white px-6 py-2 rounded shadow hover:bg-blue-600 disabled:opacity-50"
+          >
+            {isEdit ? "Benutzer speichern" : "Benutzer anlegen"}
+          </button>
+        </div>
+
+        {/* ✅ MODAL */}
+        {openPicker && (
+          <OrganizationPickerModal
+            onClose={() => setOpenPicker(false)}
+            onSubmit={handleAddOrg}
+          />
+        )}
+      </div>
     </div>
+
   );
 }
