@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Modal } from "../../../../shared/components/ui/Modal";
 import type { Organization } from "../../../organizations/types";
 import { OrganizationSelect } from "../../../organizations/components/OrganizationSelect";
+import { Button } from "../../../../shared/components/ui/Button";
 
 interface Props {
     onClose: () => void;
@@ -32,20 +33,22 @@ export default function OrganizationPickerModal({
                 />
 
                 <div className="flex justify-end gap-2 pt-4">
-                    <button
+                    <Button
                         onClick={onClose}
-                        className="px-4 py-2 bg-gray-200 rounded"
+                        variant="secondary"
+                        className="px-4 py-2"
                     >
                         Abbrechen
-                    </button>
+                    </Button>
 
-                    <button
+                    <Button
                         onClick={handleSubmit}
                         disabled={!selected}
-                        className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+                        variant="primary"
+                        className="px-4 py-2"
                     >
                         Hinzufügen
-                    </button>
+                    </Button>
                 </div>
             </div>
         </Modal>

@@ -9,8 +9,9 @@ export default function SidebarMenu({ children }: SidebarMenuProps) {
     const [expanded, setExpanded] = useState(true);
 
     return (
-        <aside className={`h-auto transition-all ${expanded ? "w-64" : "w-16"}`}>
-            <nav className="h-screen flex flex-col bg-white border-r shadow-sm overflow-hidden">
+
+        <aside className={`h-screen transition-all  ${expanded ? "w-64" : "w-16"}`}>
+            <nav className="h-full flex flex-col bg-white border-r shadow-sm">
                 <div className="p-4 pb-2 flex justify-between items-center">
                     <button
                         onClick={() => setExpanded(curr => !curr)}

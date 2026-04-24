@@ -1,3 +1,4 @@
+import { Button } from "../../../../shared/components/ui/Button";
 import { Modal } from "../../../../shared/components/ui/Modal";
 import { useDeleteUser } from "../../api/users.queries";
 import type { DeleteUserModalProps } from "../../types/user-ui.types";
@@ -18,15 +19,22 @@ export default function DeleteUserModal({ user, onClose }: DeleteUserModalProps)
             </p>
 
             <div className="flex justify-end gap-2 mt-6">
-                <button className="px-4 py-2 bg-gray-200 rounded cursor-pointer" onClick={onClose}>
+                <Button
+                    onClick={onClose}
+                    variant="secondary"
+                    className="px-4 py-2"
+                >
                     Abbrechen
-                </button>
-                <button
-                    className="px-4 py-2 bg-red-500 text-white rounded cursor-pointer hover:bg-red-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
-                    onClick={handleDelete} disabled={isPending}>
-                    Löschen
-                </button>
+                </Button>
 
+                <Button
+                    onClick={handleDelete}
+                    loading={isPending}
+                    variant="danger"
+                    className="px-4 py-2"
+                >
+                    Löschen
+                </Button>
             </div>
         </Modal>
     );

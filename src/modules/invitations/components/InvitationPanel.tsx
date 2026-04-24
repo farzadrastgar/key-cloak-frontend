@@ -5,6 +5,7 @@ import SelectedEmails from "./SelectedEmails";
 import { useSendInvitations } from "../api/invitations.queries";
 import { OrganizationSelect } from "../../organizations/components/OrganizationSelect";
 import { toast } from "sonner";
+import { Button } from "../../../shared/components/ui/Button";
 
 export default function InvitationPanel({
     selectedUsers,
@@ -108,15 +109,15 @@ export default function InvitationPanel({
 
             {/* Submit */}
             <div className="flex justify-end">
-                <button
+                <Button
                     onClick={handleSubmit}
-                    disabled={
-                        isPending || !selectedOrg || allEmails.length === 0
-                    }
-                    className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
+                    loading={isPending}
+                    disabled={isPending || !selectedOrg || allEmails.length === 0}
+                    className="px-6 py-2 rounded"
+                    variant="primary"
                 >
-                    {isPending ? "Senden..." : "Einladen"}
-                </button>
+                    Einladen
+                </Button>
             </div>
         </div>
     );

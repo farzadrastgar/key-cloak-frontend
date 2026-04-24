@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { Button } from "../../../shared/components/ui/Button";
 
 export default function LoginForm() {
   const { login } = useAuth();
@@ -80,13 +81,15 @@ export default function LoginForm() {
 
       {error && <p className="text-red-500 text-sm">{error}</p>}
 
-      <button
+      <Button
         type="submit"
+        loading={loading}
         disabled={loading}
-        className="w-full bg-blue-700 text-white py-3 rounded-lg hover:bg-blue-800 transition disabled:opacity-50 cursor-pointer"
+        className="w-full py-3 rounded-lg"
+        variant="primary"
       >
-        {loading ? "Logging in..." : "Login"}
-      </button>
+        Login
+      </Button>
     </form>
   );
 }

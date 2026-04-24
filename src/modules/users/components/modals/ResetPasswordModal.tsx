@@ -4,6 +4,8 @@ import type { BaseModalProps } from "../../../../shared/components/ui/types/moda
 import type { User } from "../../types/user.types";
 import { useResetPassword } from "../../api/users.queries";
 import { toast } from "sonner";
+import { Button } from "../../../../shared/components/ui/Button";
+import InputField from "../../../../shared/components/ui/InputField";
 
 interface Props extends BaseModalProps {
     user: User;
@@ -56,51 +58,46 @@ export default function ResetPasswordModal({ user, onClose }: Props) {
             <div className="space-y-4">
                 {/* Password */}
                 <div className="flex flex-col">
-                    <label className="text-sm text-gray-600 mb-1">
-                        Neues Passwort
-                    </label>
-                    <input
-                        className="input"
+
+                    <InputField
+                        label="Neues Passwort"
                         type="password"
                         value={form.password}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                            handleChange("password", e.target.value)
-                        }
+                        onChange={(e) => handleChange("password", e.target.value)}
                     />
                 </div>
 
                 {/* Confirm Password */}
                 <div className="flex flex-col">
-                    <label className="text-sm text-gray-600 mb-1">
-                        Passwort bestätigen
-                    </label>
-                    <input
-                        className="input"
+                    <InputField
+                        id="confirmPassword"
+                        label="Passwort bestätigen"
                         type="password"
                         value={form.confirmPassword}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                            handleChange("confirmPassword", e.target.value)
-                        }
+                        onChange={(e) => handleChange("confirmPassword", e.target.value)}
                     />
                 </div>
             </div>
 
             {/* Actions */}
             <div className="flex justify-end gap-2 mt-6">
-                <button
+                <Button
                     onClick={onClose}
-                    className="px-4 py-2 bg-gray-200 rounded cursor-pointer hover:bg-gray-300"
+                    variant="secondary"
+                    className="px-4 py-2"
                 >
                     Abbrechen
-                </button>
+                </Button>
 
-                <button
+                <Button
                     onClick={handleSubmit}
+                    loading={isPending}
                     disabled={isPending}
-                    className="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600 disabled:opacity-50"
+                    variant="primary"
+                    className="px-4 py-2"
                 >
-                    {isPending ? "Speichern..." : "Speichern"}
-                </button>
+                    Speichern
+                </Button>
             </div>
         </Modal>
     );
