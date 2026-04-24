@@ -9,10 +9,11 @@ import OrganizationPickerModal from "./modals/OrganizationsPickerModal";
 
 interface Props {
   user?: User;
-  onCancel?: () => void; // 👈 add this
+  onCancel?: () => void;
+  onSuccess?: (user: User) => void;
 }
 
-export default function NewUserForm({ user, onCancel }: Props) {
+export default function NewUserForm({ user, onCancel, onSuccess }: Props) {
   const isEdit = !!user;
   const [form, setForm] = useState<CreateUserPayload>(() => ({
     firstName: user?.firstName ?? "",
@@ -72,10 +73,19 @@ export default function NewUserForm({ user, onCancel }: Props) {
         {
           id: user.id,
           payload: form,
+        },
+        {
+          onSuccess: (updatedUser) => {
+            onSuccess?.(updatedUser);
+          },
         }
       );
     } else {
-      createUser(form);
+      createUser(form, {
+        onSuccess: (createdUser) => {
+          onSuccess?.(createdUser);
+        },
+      });
     }
   };
 
@@ -158,7 +168,7 @@ export default function NewUserForm({ user, onCancel }: Props) {
           )}
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 justify-end">
           {isEdit && (
             <button
               onClick={onCancel}

@@ -12,8 +12,8 @@ export const getUsersRequest = async (search?: string) => {
 
 // CREATE USER
 export const createUserRequest = async (payload: CreateUserPayload) => {
-    const { data } = await api.post<User>("/users", payload);
-    return data;
+    const { data } = await api.post<{ message: string; data: User }>("/users", payload);
+    return data.data;
 };
 
 export const getUserByIdRequest = async (id: string) => {
@@ -26,8 +26,8 @@ export const updateUserRequest = async (
     id: string,
     payload: UpdateUserPayload
 ) => {
-    const { data } = await api.patch<User>(`/users/${id}`, payload);
-    return data;
+    const { data } = await api.patch<{ message: string; data: User }>(`/users/${id}`, payload);
+    return data.data;
 };
 
 // DELETE USER

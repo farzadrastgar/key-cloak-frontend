@@ -29,7 +29,14 @@ const UsersPage: React.FC = () => {
 
       <div className="flex-1">
         {editingUser ? (
-          <NewUserForm user={editingUser} onCancel={() => setEditingUser(null)}
+          <NewUserForm
+            user={editingUser}
+            onCancel={() => setEditingUser(null)}
+            onSuccess={async (user) => {
+
+              setEditingUser(null);
+              setSelectedUser(user);
+            }}
           />
         ) : selectedUser ? (
           <ViewUser
@@ -37,7 +44,9 @@ const UsersPage: React.FC = () => {
             onEdit={(user) => setEditingUser(user)}
           />
         ) : (
-          <NewUserForm />
+          <NewUserForm onSuccess={(user) => {
+            setSelectedUser(user);
+          }} />
         )}
       </div>
     </div>
