@@ -13,13 +13,13 @@ const OrganizationPanel = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     return (
-        <div className="flex-1 p-6 bg-white m-2 space-y-6">
+        <div className="flex-1 p-6 bg-white m-2 h-full flex flex-col">
             <h2 className="text-xl font-semibold text-blue-600">
                 Organizations
             </h2>
 
             {/* SEARCH */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mt-4">
                 <input
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
@@ -41,11 +41,13 @@ const OrganizationPanel = () => {
             </div>
 
             {/* LIST */}
-            <OrganizationList
-                search={search}
-                selectedOrg={selectedOrg}
-                onSelect={setSelectedOrg}
-            />
+            <div className="flex-1 min-h-0 mt-4 overflow-y-auto">
+                <OrganizationList
+                    search={search}
+                    selectedOrg={selectedOrg}
+                    onSelect={setSelectedOrg}
+                />
+            </div>
 
             {/* MODALS */}
             {showCreateModal && (

@@ -1,9 +1,16 @@
 import { Building2, Search, Settings, UserPlus, Users } from "lucide-react";
 import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const DashboardPage = () => {
     const navigate = useNavigate();
+    const [query, setQuery] = useState("");
+
+    const handleSearch = () => {
+        if (!query.trim()) return;
+        navigate(`/users?query=${encodeURIComponent(query)}`);
+    };
 
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col items-center pt-20 pb-10 gap-10">
@@ -15,9 +22,17 @@ const DashboardPage = () => {
                         type="text"
                         placeholder="Benutzer suchen"
                         className="w-full outline-none"
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") handleSearch();
+                        }}
                     />
                 </div>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl shadow whitespace-nowrap">
+                <button
+                    onClick={handleSearch}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl shadow whitespace-nowrap"
+                >
                     Benutzer suchen
                 </button>
             </div>

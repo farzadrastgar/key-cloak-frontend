@@ -4,15 +4,22 @@ import NewUserForm from "../components/NewUserForm";
 import ViewUser from "../components/ViewUser";
 import type { User } from "../types/user.types";
 import { useUsers } from "../api/users.queries";
+import { useSearchParams } from "react-router-dom";
 
 const UsersPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
+
+  const initialQuery = searchParams.get("query") || "";
+
+
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [editingUser, setEditingUser] = useState<User | null>(null);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(initialQuery);
 
 
   const { data } = useUsers(search);
   const users = data?.data || [];
+
   const handleSelectUser = (user: User) => {
     setSelectedUser((prev) => (prev?.id === user.id ? null : user));
   };
@@ -24,6 +31,7 @@ const UsersPage: React.FC = () => {
         users={users}
         selectedUser={selectedUser}
         onSelectUser={handleSelectUser}
+        search={search}
         onSearch={setSearch}
       />
 
