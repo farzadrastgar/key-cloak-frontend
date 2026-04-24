@@ -69,7 +69,7 @@ export default function LoginForm() {
       </div>
 
       <div>
-        <label className="block text-sm mb-1">Password</label>
+        <label className="block text-sm mb-1">Passwort</label>
         <input
           type="password"
           value={password}
@@ -88,7 +88,7 @@ export default function LoginForm() {
         className="w-full py-3 rounded-lg"
         variant="primary"
       >
-        Login
+        Anmelden
       </Button>
     </form>
   );

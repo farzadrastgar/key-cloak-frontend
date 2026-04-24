@@ -15,7 +15,7 @@ const OrganizationPanel = () => {
     return (
         <div className="flex-1 p-6 bg-white m-2 h-full flex flex-col">
             <h2 className="text-xl font-semibold text-blue-600">
-                Organizations
+                Organisations
             </h2>
 
             {/* SEARCH */}
@@ -23,7 +23,7 @@ const OrganizationPanel = () => {
                 <input
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Search organizations..."
+                    placeholder="Organisation suchen..."
                     className="flex-1 px-3 py-2 border rounded"
                 />
 

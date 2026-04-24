@@ -12,7 +12,7 @@ interface Props {
 export const OrganizationSelect: React.FC<Props> = ({
     value,
     onChange,
-    placeholder = "Select organization...",
+    placeholder = "Organisation auswählen...",
 }) => {
     const [open, setOpen] = useState(false);
     const [search, setSearch] = useState("");
@@ -57,7 +57,7 @@ export const OrganizationSelect: React.FC<Props> = ({
                         <input
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search organization..."
+                            placeholder="Organisation suchen..."
                             className="w-full px-2 py-1 border rounded focus:outline-none"
                         />
                     </div>

@@ -97,7 +97,7 @@ export default function InvitationPanel({
             {/* ✅ Organization moved BELOW emails */}
             <div>
                 <label className="text-sm text-gray-600">
-                    Organization auswählen
+                    Organisation auswählen
                 </label>
                 <div className="mt-1">
                     <OrganizationSelect
