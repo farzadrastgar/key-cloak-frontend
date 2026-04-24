@@ -1,14 +1,15 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import Layout from "../layouts/MainLayout";
-import DashboardPage from "../modules/dashboard/pages/Dashboard";
+import LoginPage from "../../modules/auth/pages/Login";
+import DashboardPage from "../../modules/dashboard/pages/Dashboard";
+import UsersPage from "../../modules/users/pages/Users";
+import InvitationsPage from "../../modules/invitations/pages/Invitations";
+import OrganizationsPage from "../../modules/organizations/pages/Organization";
+import MFASettingsPage from "../../modules/settings/pages/MFASettings";
+import AuthenticationsSettingsPage from "../../modules/settings/pages/AuthenticationSettings";
 
-import AuthenticationsSettingsPage from "../modules/settings/pages/AuthenticationSettings";
-import MFASettingsPage from "../modules/settings/pages/MFASettings";
-import LoginPage from "../modules/auth/pages/Login";
-import UsersPage from "../modules/users/pages/Users";
-import InvitationsPage from "../modules/invitations/pages/Invitations";
-import OrganizationsPage from "../modules/organizations/pages/Organization";
+
 
 export default function AppRoutes() {
   return (

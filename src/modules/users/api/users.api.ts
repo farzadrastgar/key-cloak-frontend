@@ -1,4 +1,4 @@
-import api from "../../../services/apiClient";
+import api from "../../../core/api/apiClient";
 import type { CreateUserPayload, ResetPasswordPayload, ToggleUserStatusPayload, UpdateUserPayload, User } from "../types/user.types";
 
 

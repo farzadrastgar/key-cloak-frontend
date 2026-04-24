@@ -2,6 +2,7 @@ const ACCESS = "accessToken";
 const REFRESH = "refreshToken";
 
 export const getAccessToken = () => localStorage.getItem(ACCESS);
+export const getRefreshToken = () => localStorage.getItem(REFRESH);
 
 export const setTokens = (access: string, refresh: string) => {
   localStorage.setItem(ACCESS, access);

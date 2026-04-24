@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Topbar from "../shared/components/navigation/Topbar";
-import Sidebar from "../shared/components/navigation/Sidebar";
-
+import Topbar from "../../shared/components/navigation/Topbar";
+import Sidebar from "../../shared/components/navigation/Sidebar";
 
 export default function Layout() {
   return (

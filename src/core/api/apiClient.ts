@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAccessToken, clearTokens, setTokens } from "../utils/token";
+import { clearTokens, getAccessToken, setTokens } from "../../modules/auth/utils/token";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -57,6 +57,7 @@ api.interceptors.response.use(
         return api(originalRequest);
       } catch (refreshError) {
         clearTokens();
+        window.location.href = "/login";
         return Promise.reject(refreshError);
       }
     }

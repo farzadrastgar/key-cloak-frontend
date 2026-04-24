@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { Menu, LayoutDashboard, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../hooks/useAuth";
+import { useAuth } from "../../../modules/auth/hooks/useAuth";
 
 const Topbar = () => {
   const [showDropDown, setShowDropDown] = useState(false);
   const { logout } = useAuth(); // 👈 add this
   const navigate = useNavigate();
   const handleLogout = () => {
-    logout(); // clear tokens + user
+    logout();
+    navigate("/login");
   };
 
   const goToDashboard = () => {
