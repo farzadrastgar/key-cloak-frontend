@@ -18,9 +18,7 @@ const UsersPage: React.FC = () => {
     search,
     setSearch,
   } = useUserStore();
-  console.log('#')
-  console.log(selectedUser)
-  console.log(editingUser)
+
   // sync initial query
   useEffect(() => {
     setSearch(initialQuery);

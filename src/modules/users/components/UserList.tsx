@@ -4,25 +4,58 @@ import UserListItem from "./UserListItem";
 import type { ChangeEvent } from "react";
 import { useUserStore } from "../store/user.store";
 
-const UserList = ({ users }: { users: User[] }) => {
-  const {
-    selectedUser,
-    search,
-    setSearch,
-    setSelectedUser,
-  } = useUserStore();
+type Props = {
+  users: User[];
+
+  // controlled props (optional)
+  selectedUser?: User | null;
+  selectedUsers?: User[];
+  multiSelect?: boolean;
+  search?: string;
+
+  onSelectUser?: (user: User) => void;
+  onSearch?: (value: string) => void;
+};
+
+const UserList = ({
+  users,
+  selectedUser,
+  selectedUsers = [],
+  multiSelect = false,
+  search,
+  onSelectUser,
+  onSearch,
+}: Props) => {
+  // Zustand fallback
+  const store = useUserStore();
+
+  const effectiveSearch = search ?? store.search;
+  const effectiveSelectedUser = selectedUser ?? store.selectedUser;
+
+  const handleSearch = (value: string) => {
+    if (onSearch) return onSearch(value);
+    store.setSearch(value);
+  };
+
+  const handleSelectUser = (user: User) => {
+    if (onSelectUser) return onSelectUser(user);
+    store.setSelectedUser(user);
+  };
 
   const isUserSelected = (user: User) => {
-    return selectedUser?.id === user.id;
+    if (multiSelect) {
+      return selectedUsers.some((u) => u.id === user.id);
+    }
+    return effectiveSelectedUser?.id === user.id;
   };
 
   return (
     <div className="w-1/3 bg-white p-4 m-2 flex flex-col h-full mb-7">
       <InputField
         label="Benutzer suchen"
-        value={search}
+        value={effectiveSearch}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setSearch(e.target.value)
+          handleSearch(e.target.value)
         }
       />
 
@@ -33,12 +66,13 @@ const UserList = ({ users }: { users: User[] }) => {
           return (
             <div
               key={user.id}
-              onClick={() => setSelectedUser(user)}
+              onClick={() => handleSelectUser(user)}
               className="cursor-pointer"
             >
               <UserListItem
                 user={user}
                 isSelected={isSelected}
+                showCheckbox={multiSelect}
               />
             </div>
           );

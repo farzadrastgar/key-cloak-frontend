@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from "react";
+import { useState } from "react";
 import { Modal } from "../../../../shared/components/ui/Modal";
 import type { BaseModalProps } from "../../../../shared/components/ui/types/modal.types";
 import type { User } from "../../types/user.types";
