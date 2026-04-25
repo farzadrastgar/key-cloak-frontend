@@ -6,16 +6,15 @@ import { Mail, Phone, UserCircle, X } from "lucide-react";
 import { useToggleUserStatus, useUser } from "../api/users.queries";
 import { useUnassignUserFromOrganization } from "../../organizations/api/organizations.queries";
 import { useQueryClient } from "@tanstack/react-query";
-import type { User } from "../types/user.types";
+import { useUserStore } from "../store/user.store";
 
 export default function ViewUser({
   userId,
-  onEdit,
 }: {
   userId: string;
-  onEdit: (user: User) => void;
 }) {
   const [openModal, setOpenModal] = useState<string | null>(null);
+  const { setEditingUser } = useUserStore();
 
   const qc = useQueryClient();
 
@@ -89,7 +88,7 @@ export default function ViewUser({
 
             <UserMenu onSelect={(action) => {
               if (action === "edit") {
-                onEdit(user);
+                setEditingUser(user);
                 return;
               }
               setOpenModal(action);

@@ -2,33 +2,17 @@ import InputField from "../../../shared/components/ui/InputField";
 import type { User } from "../types/user.types";
 import UserListItem from "./UserListItem";
 import type { ChangeEvent } from "react";
+import { useUserStore } from "../store/user.store";
 
-const UserList = ({
-  users,
-  selectedUser,
-  selectedUsers = [],
-  multiSelect = false,
-  search,
-  onSelectUser,
-  onSearch,
-}: {
-  users: User[];
-  selectedUser?: User | null;
-  selectedUsers?: User[];
-  multiSelect?: boolean;
-  search: string
-  onSelectUser: (user: User) => void;
-  onSearch: (value: string) => void;
-}) => {
-
-  const handleSearch = (value: string) => {
-    onSearch(value);
-  };
+const UserList = ({ users }: { users: User[] }) => {
+  const {
+    selectedUser,
+    search,
+    setSearch,
+    setSelectedUser,
+  } = useUserStore();
 
   const isUserSelected = (user: User) => {
-    if (multiSelect) {
-      return selectedUsers.some((u) => u.id === user.id);
-    }
     return selectedUser?.id === user.id;
   };
 
@@ -38,7 +22,7 @@ const UserList = ({
         label="Benutzer suchen"
         value={search}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          handleSearch(e.target.value)
+          setSearch(e.target.value)
         }
       />
 
@@ -49,13 +33,12 @@ const UserList = ({
           return (
             <div
               key={user.id}
-              onClick={() => onSelectUser(user)}
+              onClick={() => setSelectedUser(user)}
               className="cursor-pointer"
             >
               <UserListItem
                 user={user}
                 isSelected={isSelected}
-                showCheckbox={multiSelect}   // 👈 THIS IS MISSING
               />
             </div>
           );

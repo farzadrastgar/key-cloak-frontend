@@ -7,15 +7,17 @@ import { X, Plus } from "lucide-react";
 import type { Organization } from "../../organizations/types";
 import OrganizationPickerModal from "./modals/OrganizationsPickerModal";
 import { Button } from "../../../shared/components/ui/Button";
+import { useUserStore } from "../store/user.store";
 
 interface Props {
   user?: User;
-  onCancel?: () => void;
-  onSuccess?: (user: User) => void;
 }
 
-export default function NewUserForm({ user, onCancel, onSuccess }: Props) {
+export default function NewUserForm({ user }: Props) {
   const isEdit = !!user;
+
+  const { setSelectedUser, setEditingUser } = useUserStore();
+
   const [form, setForm] = useState<CreateUserPayload>(() => ({
     firstName: user?.firstName ?? "",
     lastName: user?.lastName ?? "",
@@ -76,15 +78,15 @@ export default function NewUserForm({ user, onCancel, onSuccess }: Props) {
           payload: form,
         },
         {
-          onSuccess: (updatedUser) => {
-            onSuccess?.(updatedUser);
+          onSuccess: () => {
+            setEditingUser(null);
           },
         }
       );
     } else {
       createUser(form, {
         onSuccess: (createdUser) => {
-          onSuccess?.(createdUser);
+          setSelectedUser(createdUser);
         },
       });
     }
@@ -93,7 +95,9 @@ export default function NewUserForm({ user, onCancel, onSuccess }: Props) {
   return (
     <div className="flex-1 p-8 bg-white m-2">
       <div className="max-w-xl space-y-4">
-
+        <h1 className="text-2xl font-semibold text-blue-600">
+          {isEdit ? "Benutzer bearbeiten" : "Neuen Benutzer anlegen"}
+        </h1>
         <InputField
           label="Vorname"
           value={form.firstName}
@@ -172,7 +176,7 @@ export default function NewUserForm({ user, onCancel, onSuccess }: Props) {
         <div className="flex gap-2 justify-end">
           {isEdit && (
             <Button
-              onClick={onCancel}
+              onClick={() => setEditingUser(null)}
               variant="secondary"
               className="px-6 py-2"
             >

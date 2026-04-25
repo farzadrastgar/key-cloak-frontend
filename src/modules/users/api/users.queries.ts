@@ -66,9 +66,9 @@ export const useUpdateUser = () => {
             payload: UpdateUserPayload;
         }) => updateUserRequest(id, payload),
 
-        onSuccess: () => {
+        onSuccess: (updatedUser) => {
             qc.invalidateQueries({ queryKey: ["users"] });
-            toast.success("User updated");
+            qc.invalidateQueries({ queryKey: ["user", updatedUser.id] });
         },
         onError: (err: any) => {
             toast.error(
